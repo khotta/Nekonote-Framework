@@ -1,7 +1,3 @@
----
-permalink: /readme.html
----
-
 # Nekonote Framework
 
 Nekonote Framework is a small web application framework that helps your web development.

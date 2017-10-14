@@ -1,0 +1,3 @@
+lib/nekonote/structure/log/*
+lib/nekonote/structure/cache/*
+lib/nekonote/structure/.sass-cache

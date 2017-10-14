@@ -1,0 +1,62 @@
+# Logger Configuration
+
+# false to disable
+# true to enable
+enabled: true
+
+# Path to a logfile which is supposed to be written log messages.
+# e.g. log/%s.log
+logfile: log/%s.log
+
+# Configures if the logger writes the exception details to the log file when some exception raised.
+write_exception: true
+
+# Log message format
+# log:
+#   Configures a log message format.
+# datetime:
+#   The date format for the variable $DATE in ‘log’ directive. 
+format:
+    log: "$DATE [$LEVEL] $LOG"
+    datetime: "%a %d %b %H:%M:%S"
+
+# Sets from which log severity levels are should be reported to the log file.
+threshold: debug
+
+# The default log severity level for log messages
+default_log_level: info
+
+# Sets the threshold to rotate log files.
+limit: 1G
+
+# Sets the maximum number of old log files.
+# 0 to keeping all old log files. 
+keep: 0
+
+# Configures if old log files are compressed when rotation is done.
+# enabled:
+#   false to disabled
+#   true to enabled
+# level:
+#   Compression level for gzip.
+compress:
+    enabled: false
+    level: 6
+
+# false to log messages are written to only log files.
+# true to log messages are written to stdout as well.
+with_stdout: false
+
+# false to the warning messsages are ignored.
+# ture to the warning messages are written to the log files.
+verbose: true
+
+# When this directive is set ‘true’, the logger can be multi-processes safe
+psync: true
+
+# Program will wait for this seconds after rotation was done.
+sleeptime: 0.1
+
+# false to disbale flushing buffered data after writing a log message to the log file.
+# true to enable flushing buffered data.
+flush: true

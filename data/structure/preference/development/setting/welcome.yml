@@ -1,0 +1,7 @@
+# constant values for the welcome page
+url:
+    document: https://nekonote-framework.github.io/document
+    gem: https://rubygems.org/gems/nekonote-framework
+    github: https://github.com/khotta/Nekonote-Framework
+    contribute: https://nekonote-framework.github.io/document/contribute
+    license: https://github.com/khotta/Nekonote-Framework/blob/master/LICENSE

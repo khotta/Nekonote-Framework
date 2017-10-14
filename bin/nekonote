@@ -1,0 +1,45 @@
+#!/usr/bin/env ruby
+
+begin
+    begin
+        require 'color_echo'
+        require 'nekonote'
+    rescue LoadError
+        # couldn't find them in LOAD_PATH
+        # installed via bundler? change LOAD_PATH to bundler
+        require 'bundler/setup'
+        require 'color_echo'
+        require 'nekonote'
+    end
+
+rescue LoadError => e
+    warn 'LoadError: ' + $/ + %(    #{e.message})
+    exit 1
+end
+
+begin
+    root = nil
+
+    # parse options
+    parser = Nekonote::CmdParser.new $*
+    if parser.version_option?
+        Nekonote::Cli.version
+
+    elsif parser.help_option?
+        Nekonote::Cli.usage
+
+    elsif parser.root_option?
+        root = parser.get_op_val_root
+        raise Nekonote::CLIError, 'Missing value with --root option.' if root == nil
+    end
+
+    options = {
+        :root => root
+    }
+
+    cmd, subcmd, val = parser.parse_un_options
+    Nekonote::Cli.new(cmd, subcmd, val, options).exec
+
+rescue StandardError, ScriptError => e
+    Nekonote::Error.abort e
+end

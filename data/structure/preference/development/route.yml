@@ -1,0 +1,30 @@
+# Routes Configuration
+#
+# e.g.
+# FooHandler:
+#    path: /foo                                                    # This is required. The following directives are optional.
+#    execute: foo                                                  # It says FooHandler#foo method is called when route matches.
+#    method: GET, POST                                             # It says GET or POST requests are accepted.
+#    params: foo=int, bar=string, baz=array, qux=float, quux=bool  # The listed parameters are accepted and are coverted to its expected types.
+#    content: json                                                 # It says Content-Type: application/json is set to response.
+#    template: foo                                                 # static/template/foo.tpl is rendered.
+#    layout: common                                                # static/layout/common.tpl is rendered
+#    # page_cache_time: 3600                                       # if you need page caching this route, need to comment out it.
+#    custom: some value                                            # unknown fields are not directive. It will be assigned into your templates.
+
+# ----------------------
+# Route Options
+# ----------------------
+preference:
+    path_as_regexp: false
+    allow_dup_slash: false
+
+# ----------------------
+# Routes
+# ----------------------
+WelcomeHandler:
+    path: /
+    execute: index
+    template: welcome/index
+    css: /css/welcome.css
+    page-title: Welcome

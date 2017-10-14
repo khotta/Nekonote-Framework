@@ -1,0 +1,22 @@
+# This file is supposed to configure a group of some common preferences to configure routes in route.yml.
+# You may specify common preferences set here by 'include' directive in route.yml.
+#
+# e.g.
+# common:
+#     method: GET
+#     params: id=int
+#     content: json
+#     template: false
+#     layoute: false
+#
+# In order to set the above preferences you must write 'include' directive like:
+#
+# FooHandler:
+#     path: /foo
+#     method: foo
+#     include: common 
+#
+# BarHandler:
+#     path: /bar
+#     method: bar
+#     include: common

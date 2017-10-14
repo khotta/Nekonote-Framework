@@ -1,0 +1,52 @@
+@mixin stylish-font {
+  font-family: 'Open Sans', sans-serif;
+  letter-spacing: 0.1em;
+}
+
+body {
+  background-color: #f0f0f5;
+}
+
+#content {
+  margin-left: 0.6em;
+  font-family: helvetica, arial, sans-serif;
+  h3 {
+    color: #e6005c;
+    @include stylish-font;
+  }
+  h4 {
+    color: #ff1a1a;
+    @include stylish-font;
+    font-weight: normal;
+    margin-top: 2em;
+    margin-bottom: 0.6em;
+  }
+  .description {
+    text-indent: 2em;
+  }
+  em {
+    color: #ff0066;
+  }
+  a {
+    color: #737373;
+    text-decoration: none;
+    &:link {
+    }
+    &:visited {
+    }
+    &:hover {
+      color: #ff8566;
+      text-decoration: underline;
+    }
+  }
+  #footer-logo {
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+    background-image: url("/img/logo.png");
+    background-repeat: no-repeat;
+    background-size: 15em 5em;
+    height: 5em;
+    width: 15em;
+  }
+}

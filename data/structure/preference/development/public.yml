@@ -1,0 +1,29 @@
+# Publishing Static Files
+
+# Sets directories to publish
+# Files under the directory are published recursively
+published_directory:
+    - css  # public/css/* will be published recursively
+    - js   # public/js/*  will be published recursively
+    - img  # public/img/* will be published recursively
+
+# Sets files to publish
+published_file:
+    - favicon.ico # public/favicon.ico will be published
+
+# Sets headers to add published static files
+custom_header:
+    # Sets HTTP headers to all files located in the ‘public’ directory.
+    all:
+
+    # Sets HTTP headers to files located under a specific directory.
+    directory:
+
+    # Sets HTTP headers to files with a specific file name extension
+    extension:
+
+    # Sets HTTP headers to files matched a specific regular expression.
+    regexp:
+
+    # Sets HTTP headers to most common web font formats.
+    fonts:

@@ -1,0 +1,40 @@
+# User Configuration Files
+#
+# You may configure some constant values here.
+# ====================
+# for example:
+# --------------------
+# foo:
+#     a: 1
+#     b: hello
+#     c: true
+#     d: 0.1
+#     e:
+#         - FOO
+#         - BAR
+#         - BAZ
+# --------------------
+# It's possible to reference them from Handler classes:
+#   __setting_get :foo     #=> {"a"=>1, "b"=>"hello", "c"=>true, "d"=>0.1, "e"=>["FOO", "BAR", "BAZ"]}
+#   __setting_get :foo, :a #=> 1
+#   __setting_get :foo, :b #=> "hello"
+#   __setting_get :foo, :c #=> true
+#   __setting_get :foo, :d #=> 0.1
+#   __setting_get :foo, :e #=> ["FOO", "BAR", "BAZ"]
+#
+# Returns nil in the following cases,
+#   __setting_get          #=> no given anything
+#   __setting_get :bar     #=> no such field
+#   __setting_get :foo, :f #=> no such field in foo:
+#
+# In templates, You must use 'setting_get' tag like: {% setting_get foo, a %}
+# ====================
+ foo:
+     a: 1
+     b: hello
+     c: true
+     d: 0.1
+     e:
+         - FOO
+         - BAR
+         - BAZ

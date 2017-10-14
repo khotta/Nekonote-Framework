@@ -44,6 +44,9 @@ Liquid is a well-known powerful template engine. Templates are rendered by Liqui
 
 Please see [Getting Started](https://nekonote-framework.github.io/document/1.0.0-beta/getting-started.html) on the reference manual.
 
+You need to use `--pre` option when install pre-beta version like:
+        $ gem install nekonote-framework --pre
+
 ## License
 
 Nekonote Framework is friendly license and is released under the [MIT License](https://opensource.org/licenses/MIT).

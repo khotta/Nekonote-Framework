@@ -10,7 +10,7 @@ _app_root = 'REPLACE_ME_TO_APP_ROOT'
 _host = '0.0.0.0'
 
 # listen port
-_port = '2002'
+_port = 2002
 
 # the directory to oparate out of
 directory _app_root
@@ -34,7 +34,7 @@ threads 0, 16
 environment 'none'
 
 # true to server is daemonize
-daemonize true
+daemonize false
 
 # PID and state for puma web server
 pidfile "#{_app_root}/tmp/pids/puma.pid"

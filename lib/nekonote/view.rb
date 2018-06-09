@@ -6,8 +6,8 @@ module Nekonote
     class View
         NO_USING_NAME       = 'none'
         DEFAULT_LAYOUT_NAME = 'default'
-        PATH_TO_TEMPLATE    = 'static/template'
-        PATH_TO_LAYOUT      = 'static/layout'
+        PATH_TO_TEMPLATE    = 'template'
+        PATH_TO_LAYOUT      = 'template/layout'
 
         # accessor
         attr_accessor :is_redirect

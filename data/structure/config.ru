@@ -1,10 +1,15 @@
 # This is a configuration file about Rack which created automatically.
 # You must NOT delete this file.
 
-# for starting web server withouht 'nekonote server'
+# for starting web server without 'nekonote server'
 if !defined? Nekonote
-    require 'bundler/setup'
-    require 'nekonote'
+    begin
+        require 'nekonote'
+    rescue LoadError
+        # installed via bundler? change LOAD_PATH to bundler's
+        require 'bundler/setup'
+        require 'nekonote'
+    end
 end
 
 # set-up your application

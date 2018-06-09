@@ -2,7 +2,7 @@ class ErrorHandler < BaseHandler
     def missing_route
         @subject = 'Invalid URL'
         @msg     = 'The URL does not match any route'
-        @detail  = %('#{Nekonote::Env.get :REQUEST_URI}' does not match any route.)
+        @detail  = %('#{Nekonote::Env.get :REQUEST_URI}' is not valid URL.)
     end
 
     def wrong_http_method

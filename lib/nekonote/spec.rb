@@ -1,6 +1,6 @@
 module Nekonote
     LIBS_NAME   = %(nekonote-framework).freeze
-    VERSION     = %(1.0.0-beta).freeze
+    VERSION     = %(1.0.0-beta2).freeze
     HOMEPAGE    = %(https://nekonote-framework.github.io).freeze
     SUMMARY     = %(Simple and Lightweight Ruby Framework for Web Development).freeze
     DESCRIPTION = %(Nekonote Framework is a small web application framework that helps your web development.).freeze
@@ -9,9 +9,9 @@ module Nekonote
 .*･゜ﾟ･*:.｡..｡.:･Thanks installing Nekonote Framework .*･゜ﾟ･*:.｡..｡.:*･
 
        ^___^
-      (=^x^=) < meow meow
-      /    )                   !
- . ~~(  h h  . .   .     .  . . =(**=)~~
+      (=^x^=) < meow
+   ~  /    )                   !
+ .  \(  h h  . .   .     .  . . =(**=)~~
 
 Note:
   Installing dependent libraries is not completed yet.

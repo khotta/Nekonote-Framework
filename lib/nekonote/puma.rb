@@ -59,7 +59,7 @@ module Nekonote
                 case cmd
                 when :start
                     if pid != nil
-                        puts %(Already started with pid #{pid})
+                        puts %(Already started -> pid #{pid})
                         nothing_to_do = true
                     end
 
@@ -67,7 +67,7 @@ module Nekonote
                     if pid == nil
                         puts %(Server is stopped)
                     else
-                        puts %(Server is running with pid #{pid})
+                        puts %(Server is running -> pid #{pid})
                     end
                     nothing_to_do = true
 

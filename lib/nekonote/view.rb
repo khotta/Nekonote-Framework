@@ -49,33 +49,9 @@ module Nekonote
                 @is_error_route = false
             end
 
-            # set template
-            if @info_template.is_a? String
-                # use template described in route.yml
-                @template_path = Nekonote.get_root_path + PATH_TO_TEMPLATE + '/' + @info_template + '.tpl'
-            elsif @info_template == nil
-                # set default if no template is specified
-                @template_path = get_default_template_path handler_name
-            else
-                # no template with response
-                @template_path = nil
-            end
-
-            # set layout
-            if @info_layout.is_a? String
-                # use layout described in route.yml
-                @layout_path = Nekonote.get_root_path + PATH_TO_LAYOUT + '/' + @info_layout + '.tpl'
-            elsif @info_layout == nil
-                # if no layout is specified, try to use default layout
-                @layout_path = Nekonote.get_root_path + PATH_TO_LAYOUT + '/' + DEFAULT_LAYOUT_NAME + '.tpl'
-                if !Util::Filer.available_file? @layout_path
-                    # but if it's not available, no layout with response
-                    @layout_path = nil
-                end
-            else
-                # no layout with response
-                @layout_path = nil
-            end
+            # initialize template and layout
+            init_template handler_name
+            init_layout
 
             # assign extra fields into templates
             assign_custom_fields info
@@ -263,6 +239,22 @@ module Nekonote
             end
         end
 
+        # Need reload after method was called and commented out it because view object will alive
+        # @param string path relative path from app root to template file
+        public
+        def set_template(path)
+            @info_template = path
+            init_template
+        end
+
+        # Need reload after method was called and commented out it because view object will alive
+        # @param string path relative path from app root to layout file
+        public
+        def set_layout(path)
+            @info_layout = path
+            init_layout
+        end
+
         # @param hash info
         private
         def register_info_properies(info)
@@ -283,6 +275,54 @@ module Nekonote
             @is_redirect = false
         end
 
+        # initialize conf about template by @info_template
+        # @param string|nil handler_name
+        private
+        def init_template(handler_name = nil)
+            if @info_template.is_a? String
+                # check exists later
+                @template_path = get_template_path @info_template
+            elsif @info_template == nil && handler_name.is_a?(String)
+                # try to set a default template
+                @template_path = get_default_template_path handler_name
+            else
+                # no use template
+                @template_path = nil
+            end
+        end
+
+        # initialize conf about layout by @info_layout
+        private
+        def init_layout
+            if @info_layout.is_a? String
+                # check exists later
+                @layout_path = get_layout_path @info_layout
+            elsif @info_layout == nil
+                # try to set a default layout
+                @layout_path = get_layout_path DEFAULT_LAYOUT_NAME
+                if !Util::Filer.available_file? @layout_path
+                    @layout_path = nil
+                end
+            else
+                # no use layout
+                @layout_path = nil
+            end
+        end
+
+        # @param string template relative path to template file
+        # @return string absolute path
+        private
+        def get_template_path(template)
+            return Nekonote.get_root_path + PATH_TO_TEMPLATE + '/' + template + '.tpl'
+        end
+
+        # @param string layout relative path to layout file
+        # @return string absolute path
+        private
+        def get_layout_path(layout)
+            return Nekonote.get_root_path + PATH_TO_LAYOUT + '/' + layout + '.tpl'
+        end
+
         # Returns template path for the default when it was found and available
         # @param string|nil
         private
@@ -296,10 +336,13 @@ module Nekonote
                 template = nil
             end
 
-            # invalid template
+            # return nil if invalid template name
             return nil if (template.nil? || template == '')
 
-            template_path = Nekonote.get_root_path + PATH_TO_TEMPLATE + '/' + template + '.tpl'
+            # get absolute path
+            template_path = get_template_path template
+
+            # set if available
             if Util::Filer.available_file? template_path
                 template_path = template_path
             else

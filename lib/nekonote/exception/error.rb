@@ -3,18 +3,18 @@ module Nekonote
     class Error < StandardError
         SPACE = '    '
         MSG_MISSING_ENV          = %(Environment variable NEKONOTE_ENV is empty or invalid environment name is set.)
-        MSG_MISSING_ROOT         = %(Missing root directory to the application structure.)
-        MSG_NOT_DEFINED_ROOT     = %(Application root is not defined yet.)
+        MSG_MISSING_ROOT         = %(Not found a root directory to the application structure.)
+        MSG_NOT_DEFINED_ROOT     = %(Application root has not set yet.)
         MSG_MISSING_FILE         = %(No such file '%s' or can't read it.)
         MSG_MISSING_DIR          = %(No such directory '%s' or can't read it.)
-        MSG_MISSING_RACKUP       = %(Missing config.ru under '%s' or can't read it.)
+        MSG_MISSING_RACKUP       = %(No found config.ru under '%s' or can't read it.)
         MSG_LACK_FIELD_IN_YAML   = %(Lack of the required field '%s'. Please check if '%s' is set properly.)
         MSG_EMPTY_YAML           = %('%s' is empty. You must configure something.)
         MSG_WRONG_ROOT           = %(You'd better run the command at the application root, or --root option will solve the problem.)
-        MSG_WRONG_TYPE           = %(You gave %s but the expected type is '%s'.)
+        MSG_WRONG_TYPE           = %([%s] is invalid type. It must be passed [%s].)
         MSG_MISSING_FIELD        = %(The required field '%s' was not found in '%s'.)
         MSG_INVALID_FIELD        = %(Invalid format field '%s' in '%s'.)
-        MSG_MISSING_CONST        = %(Missing such class or module or contant -> '%s'.)
+        MSG_MISSING_CONST        = %(Not found such class or module or contant -> '%s'.)
         MSG_EMPTY_FILE_NOT_EMPTY = %('%s' is not empty. Failed to create an empty file.)
 
         # write message as warning to log file if logging is enabled

@@ -94,7 +94,6 @@ module Nekonote
                 return Nekonote::Env.keys
             end
 
-
             # @param string dest
             # @param int code
             protected

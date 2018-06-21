@@ -301,7 +301,7 @@ EOS
                     begin
                         routes[info[Preference::FIELD_ROUTE_PATH].strip] = Object.const_get(handler).new(info)
                     rescue NameError
-                        raise PreferenceError, PreferenceError::MSG_NO_SUCH_HANDLER% info[Preference::FIELD_ROUTE_HANDLER]
+                        raise PreferenceError, PreferenceError::MSG_FAILED_INI_HANDLER% info[Preference::FIELD_ROUTE_HANDLER]
                     end
 
                     paths << path

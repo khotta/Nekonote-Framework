@@ -94,6 +94,18 @@ module Nekonote
                 return Nekonote::Env.keys
             end
 
+            # @param string path
+            protected
+            def __set_template(path)
+                @view.set_template path
+            end
+
+            # @param string path
+            protected
+            def __set_layout(path)
+                @view.set_layout path
+            end
+
             # @param string dest
             # @param int code
             protected

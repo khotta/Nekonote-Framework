@@ -369,7 +369,7 @@ EOS
             # generate files and directories
             cp_from  = @path_structure + '/'
             files = ['Gemfile', 'config.ru']
-            dirs  = ['handler', 'lib', 'preference', 'public', 'static', 'tmp']
+            dirs  = ['handler', 'lib', 'preference', 'public', 'template', 'tmp']
             free_dirs_to_make = ['cache', 'log']
 
             # copy files

@@ -106,6 +106,12 @@ module Nekonote
                 @view.set_layout path
             end
 
+            # @return string
+            protected
+            def __root
+                return Nekonote::Env.root
+            end
+
             # @param string dest
             # @param int code
             protected

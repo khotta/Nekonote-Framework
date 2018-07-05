@@ -1,8 +1,5 @@
 source 'https://rubygems.org'
 
-# Nekonote Framework
-#   Copyright (c) 2017, Kazuya Hotta
-#   License https://github.com/khotta/Nekonote-Framework/blob/master/LICENSE
 gem 'nekonote-framework', 'REPLACE_ME_TO_NEKONOTE_VERSION'
 gem 'simple_rotate', '~> 1.2', '>= 1.2.0'
 gem 'color_echo', '~> 3.1', '>= 3.1.1'

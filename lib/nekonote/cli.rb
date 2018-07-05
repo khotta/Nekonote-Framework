@@ -220,7 +220,7 @@ EOS
         # @param string path
         private
         def generate_template(path)
-            stack         = get_absolute_path_list path, 'static/template'
+            stack         = get_absolute_path_list path, 'template'
             template_path = stack.pop + '.tpl'
             gen_dir_list  = stack
 
@@ -261,7 +261,7 @@ EOS
         # @param string path
         private
         def generate_layout(path)
-            stack        = get_absolute_path_list path, 'static/layout'
+            stack        = get_absolute_path_list path, 'template/layout'
             layout_path  = stack.pop + '.tpl'
             gen_dir_list = stack
 

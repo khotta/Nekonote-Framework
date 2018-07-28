@@ -36,7 +36,7 @@ It can display exception's details on your browser.
 ### Logger
 It provides you thread-safe logging.
 
-Template Engine
+### Template Engine
 The templating engine on Nekonote Framework is Liquid.
 
 ## Getting Started

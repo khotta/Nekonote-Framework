@@ -16,6 +16,7 @@ module Nekonote
         MSG_INVALID_FIELD        = %(Invalid format field '%s' in '%s'.)
         MSG_MISSING_CONST        = %(Not found such class or module or contant -> '%s'.)
         MSG_EMPTY_FILE_NOT_EMPTY = %('%s' is not empty. Failed to create an empty file.)
+        MSG_NOT_FOUND_DIRECTIVE  = %('%s' directive is required in '%s')
 
         # write message as warning to log file if logging is enabled
         # @param string msg
@@ -32,8 +33,6 @@ module Nekonote
 
         # @param StandardError e
         def self.abort(e)
-            logging_error e
-
             # if executed from cli do not throw exception
             if Nekonote.from_cli?
                 warn "#{e.class}; =(-x-=;)" + $/
@@ -43,6 +42,9 @@ module Nekonote
                 end
                 exit 1
             end
+
+            # logging when logger is enabled
+            logging_error e
 
             raise e
         end

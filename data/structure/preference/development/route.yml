@@ -13,11 +13,13 @@
 #    custom: some value                                            # unknown fields are not directive. It will be assigned into your templates.
 
 # ----------------------
-# Route Options
+# routing options
 # ----------------------
 preference:
     path_as_regexp: false
     allow_dup_slash: false
+    template_file_extension: tpl
+    layout_file_extension: tpl
 
 # ----------------------
 # Routes

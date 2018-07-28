@@ -4,8 +4,8 @@ module Nekonote
         MSG_WRONG_YAML_SYNTAX    = %(The yaml file '%s' is invalid syntax.)
         MSG_MISSING_INCLUDE      = %(No such field '%s' in %s.)
         MSG_INVALID_HANDLER_NAME = %(Handler class name '%s' is invalid.)
-        MSG_DUPLICATE_PATH       = %(There is the duplicate path in %s. Values of 'path' directive are supposed to be uniq.)
-        MSG_EVAL_MIDDLEWARES     = %(Unable to evaluate '%s' because there's something wrong.)
+        MSG_DUPLICATE_PATH       = %(There is the duplicate path in %s. Values of 'path' directive are supposed to be unique.)
+        MSG_EVAL_MIDDLEWARES     = %(Failed to run '%s')
         MSG_FAILED_INI_HANDLER   = %(Failed to make a %s class object.)
     end
 end

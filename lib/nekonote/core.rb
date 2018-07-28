@@ -83,7 +83,7 @@ module Nekonote
 
     # load and initialize logger if it has been enabled
     def self.init_logger
-        pref_logger = Preference.instance.get_logger true # don't use property cache
+        pref_logger = Preference.instance.get_logger
 
         if pref_logger['write_exception'] == true
             @@logger_write_exception = true

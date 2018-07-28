@@ -149,8 +149,10 @@ module Nekonote
                 # evaluate middlewares.rb as Ruby codes
                 path = Preference.instance.path_middlewares_rb
                 begin
+                    # run middlewares.rb
                     instance_eval IO.read path
                 rescue => e
+                    # when the web server deamonized it will be output into log/puma.stderr.log
                     warn <<EOS
 #{PreferenceError::MSG_EVAL_MIDDLEWARES% path}
 
@@ -300,8 +302,8 @@ EOS
                     # set app
                     begin
                         routes[info[Preference::FIELD_ROUTE_PATH].strip] = Object.const_get(handler).new(info)
-                    rescue NameError
-                        raise PreferenceError, PreferenceError::MSG_FAILED_INI_HANDLER% info[Preference::FIELD_ROUTE_HANDLER]
+                    rescue NameError => e
+                        Error.abort e
                     end
 
                     paths << path

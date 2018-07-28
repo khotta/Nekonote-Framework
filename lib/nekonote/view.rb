@@ -122,13 +122,12 @@ module Nekonote
             # if nil is given for layout and/or template, No template and/or layout will be used
             if @template_path != nil && !Util::Filer.available_file?(@template_path)
                 raise ViewError, ViewError::MSG_MISSING_TEMPLATE_FILE% @template_path
-            end
 
-            if @layout_path != nil && !Util::Filer.available_file?(@layout_path)
+            elsif @layout_path != nil && !Util::Filer.available_file?(@layout_path)
                 raise ViewError, ViewError::MSG_MISSING_LAYOUT_FILE% @layout_path
             end
 
-            @response.write get_parsed(@template_path, @layout_path)
+            @response.write get_parsed
         end
 
         # @param string|symbol subject
@@ -313,14 +312,16 @@ module Nekonote
         # @return string absolute path
         private
         def get_template_path(template)
-            return Nekonote.get_root_path + PATH_TO_TEMPLATE + '/' + template + '.tpl'
+            ext = Preference.instance.get_template_file_extension
+            return "#{Nekonote.get_root_path}#{PATH_TO_TEMPLATE}/#{template}.#{ext}"
         end
 
         # @param string layout relative path to layout file
         # @return string absolute path
         private
         def get_layout_path(layout)
-            return Nekonote.get_root_path + PATH_TO_LAYOUT + '/' + layout + '.tpl'
+            ext = Preference.instance.get_layout_file_extension
+            return "#{Nekonote.get_root_path}#{PATH_TO_LAYOUT}/#{layout}.#{ext}"
         end
 
         # Returns template path for the default when it was found and available
@@ -390,21 +391,19 @@ module Nekonote
             end
         end
 
-        # @param string|nil template_path
-        # @param string|nil layout_path
         # @return string
         private
-        def get_parsed(template_path = nil, layout_path = nil)
+        def get_parsed
             data = ''
             liq_tpl_template = nil
             liq_tpl_layout   = nil
             begin
-                if template_path.is_a? String
-                    liq_tpl_template = Liquid::Template.parse IO.read(template_path)
+                if @template_path.is_a? String
+                    liq_tpl_template = Liquid::Template.parse IO.read(@template_path)
                 end
 
-                if layout_path.is_a? String
-                    liq_tpl_layout = Liquid::Template.parse IO.read(layout_path)
+                if @layout_path.is_a? String
+                    liq_tpl_layout = Liquid::Template.parse IO.read(@layout_path)
                 end
 
                 # parse and render template

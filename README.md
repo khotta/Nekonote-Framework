@@ -1,44 +1,43 @@
 # Nekonote Framework
-
-Nekonote Framework is a small web application framework that helps your web development.
+Simple and Lightweight Ruby Framework for Web Development
 
 ## Features
 
 ### Simple
-"Simplicity" is one of most important things. Nekonote Framework is simple and easy to learn.
+Nekonote Framework is simple and easy to learn.
 
 ### Lightweight
-Nekonote Framework is not full-stack framework. It's small and Lightweight.
+It's not a kind of full-stack framework. Small and Lightweight.
 
 ### Rack-based
-Nekonote Framework can generate Rack application easily even if you are not familiar with Rack.
+You can generate a Rack application easily.
 
 ### MVC
-Nekonote Framework is designed as Push-MVC based architecture.
+It's Push-MVC based architecture.
 
-### Application Structure
-It's possible to generate a structure of application by running nekonote command.
+### Structure
+You can get started with a application structure.
 
-### Sanitizing
-Nekonote Framework can sanitize HTTP request parameters as your expected.
+### Web Server
+"nekonote" command can controll a web server.
 
-### Strict Routes
-You can configure routes easily by the configuration files. You may set some rules to them.
+### Routing
+You can define routes for your application in the configuration files.
 
-### Error Pages
-You may configure routes for error pages by the configuration file.
+### Error Routes
+You may define the routes for when some exceptional things happend.
 
-### Separable Environments
-It's possible to separate the configuration files by environments.
+### Environments
+You can configure environments for your application.
 
 ### GUI Debuger
-The GUI-based debugger can display exception details on your browser.
+It can display exception's details on your browser.
 
-### Multiprocess-safe Logger
-Nekonote Framework provides you safety logging. It's multiprocess-safety and thread-safety.
+### Logger
+It provides you thread-safe logging.
 
-### Liquid Template Engine
-Liquid is a well-known powerful template engine. Templates are rendered by Liquid.
+Template Engine
+The templating engine on Nekonote Framework is Liquid.
 
 ## Getting Started
 

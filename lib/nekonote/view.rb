@@ -4,10 +4,8 @@ module Nekonote
     ::Liquid::Template.register_tag 'setting_get', TagSettingGet
 
     class View
-        NO_USING_NAME       = 'none'
-        DEFAULT_LAYOUT_NAME = 'default'
-        PATH_TO_TEMPLATE    = 'template'
-        PATH_TO_LAYOUT      = 'template/layout'
+        PATH_TO_TEMPLATE = 'template'
+        PATH_TO_LAYOUT   = 'template/layout'
 
         # accessor
         attr_accessor :is_redirect
@@ -279,11 +277,8 @@ module Nekonote
         private
         def init_template(handler_name = nil)
             if @info_template.is_a? String
-                # check exists later
+                # checking whether to exist or not is later 
                 @template_path = get_template_path @info_template
-            elsif @info_template == nil && handler_name.is_a?(String)
-                # try to set a default template
-                @template_path = get_default_template_path handler_name
             else
                 # no use template
                 @template_path = nil
@@ -294,14 +289,8 @@ module Nekonote
         private
         def init_layout
             if @info_layout.is_a? String
-                # check exists later
+                # checking whether to exist or not is later
                 @layout_path = get_layout_path @info_layout
-            elsif @info_layout == nil
-                # try to set a default layout
-                @layout_path = get_layout_path DEFAULT_LAYOUT_NAME
-                if !Util::Filer.available_file? @layout_path
-                    @layout_path = nil
-                end
             else
                 # no use layout
                 @layout_path = nil
@@ -322,35 +311,6 @@ module Nekonote
         def get_layout_path(layout)
             ext = Preference.instance.get_layout_file_extension
             return "#{Nekonote.get_root_path}#{PATH_TO_LAYOUT}/#{layout}.#{ext}"
-        end
-
-        # Returns template path for the default when it was found and available
-        # @param string|nil
-        private
-        def get_default_template_path(handler_name)
-            return nil if !handler_name.is_a? String
-
-            # get default template path when no template specified
-            begin
-                template = handler_name.sub(/Handler$/, '').gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').gsub(/([a-z\d])([A-Z])/,'\1_\2').downcase
-            rescue
-                template = nil
-            end
-
-            # return nil if invalid template name
-            return nil if (template.nil? || template == '')
-
-            # get absolute path
-            template_path = get_template_path template
-
-            # set if available
-            if Util::Filer.available_file? template_path
-                template_path = template_path
-            else
-                template_path = nil
-            end
-
-            return template_path
         end
 
         # @param string type

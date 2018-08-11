@@ -136,7 +136,12 @@ module Nekonote
                 return false
             end
 
-            return @parsed_route_error_yml.is_a?(Hash) && @parsed_route_error_yml[field][FIELD_ROUTE_HANDLER].is_a?(String)
+            # check if the field exists
+            if !@parsed_route_error_yml.is_a?(Hash) || !@parsed_route_error_yml[field].is_a?(Hash)
+                return false
+            end
+
+            return @parsed_route_error_yml[field][FIELD_ROUTE_HANDLER].is_a?(String)
         end
 
         # @return bool

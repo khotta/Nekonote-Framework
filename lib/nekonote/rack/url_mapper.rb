@@ -107,7 +107,7 @@ module Nekonote
         end
 
         unless location[0] == ?/
-          raise ArgumentError, "paths need to start with /"
+          raise ArgumentError, %(Values for 'path' directive need to be started from /)
         end
 
         location = location.chomp('/')

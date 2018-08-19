@@ -32,12 +32,6 @@ module Nekonote
             ]
         end
 
-        # @param string filepath
-        # @return string
-        def self.get_template_path(filepath)
-            return Nekonote.get_root + '/' + self::PATH_TO_PARTIAL + '/' + filepath + '.tpl'
-        end
-
         # @param hash info
         # @param string handler_name
         # @param nil|string error_field_name

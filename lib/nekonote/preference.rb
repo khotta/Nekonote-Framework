@@ -12,8 +12,6 @@ module Nekonote
         FIELD_ROUTING_OPTIONS = 'preference'
         FIELD_OPTION_ROUTE_REGEXP    = 'path_as_regexp'
         FIELD_OPTION_ALLOW_DUP_SLASH = 'allow_dup_slash'
-        FIELD_OPTION_TEMPLATE_EXT    = 'template_file_extension'
-        FIELD_OPTION_LAYOUT_EXT      = 'layout_file_extension'
 
         # default values for routing options
         DEFAULT_OPTION_ROUTE_REGEXP      = false
@@ -209,8 +207,8 @@ module Nekonote
             # true -> Nekonote::URLMapper, false -> :Rack::URLMap            
             @is_path_regexp          = routing_options[FIELD_OPTION_ROUTE_REGEXP]    || DEFAULT_OPTION_ROUTE_REGEXP
             @is_allow_dup_slash      = routing_options[FIELD_OPTION_ALLOW_DUP_SLASH] || DEFAULT_OPTION_ALLOW_DUP_SLASH
-            @template_file_extension = routing_options[FIELD_OPTION_TEMPLATE_EXT]    || DEFAULT_OPTION_TEMPLATE_FILE_EXT
-            @layout_file_extension   = routing_options[FIELD_OPTION_LAYOUT_EXT]      || DEFAULT_OPTION_LAYOUT_FILE_EXT
+            @template_file_extension = DEFAULT_OPTION_TEMPLATE_FILE_EXT
+            @layout_file_extension   = DEFAULT_OPTION_LAYOUT_FILE_EXT
 
             # validation for file extension
             if !@template_file_extension.is_a?(String) || @template_file_extension == ''

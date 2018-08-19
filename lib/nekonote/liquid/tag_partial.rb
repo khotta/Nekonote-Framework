@@ -13,7 +13,7 @@ module Nekonote
             end
 
             # absolute path to the partial template
-            filepath = View.get_template_path(@filepath)
+            filepath = Nekonote.get_root + '/' + View::PATH_TO_PARTIAL + '/' + @filepath + '.tpl'
 
             # read data and parse it and render it
             data = ''

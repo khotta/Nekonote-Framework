@@ -2,10 +2,12 @@ module Nekonote
     # define original liquid tag
     ::Liquid::Template.register_tag 'env_get', TagEnvGet
     ::Liquid::Template.register_tag 'setting_get', TagSettingGet
+    ::Liquid::Template.register_tag 'partial', TagPartial
 
     class View
         PATH_TO_TEMPLATE = 'template'
         PATH_TO_LAYOUT   = 'template/layout'
+        PATH_TO_PARTIAL  = 'template/partial'
 
         # accessor
         attr_accessor :is_redirect
@@ -19,6 +21,7 @@ module Nekonote
                       :info_layout,
                       :info_page_cache_time
 
+        # Returns default response for error
         # @return array
         def self.get_default_error_response
             return [
@@ -27,6 +30,12 @@ module Nekonote
                 },
                 []
             ]
+        end
+
+        # @param string filepath
+        # @return string
+        def self.get_template_path(filepath)
+            return Nekonote.get_root + '/' + self::PATH_TO_PARTIAL + '/' + filepath + '.tpl'
         end
 
         # @param hash info
@@ -219,10 +228,10 @@ module Nekonote
             list_cnv = {}
             list.map {|pair| list_cnv[pair[0].to_s] = pair[1] }
 
-            if defined?(@mapping) && @mapping.is_a?(Hash)
-                @mapping.merge! list_cnv
+            if defined?(@assign_list) && @assign_list.is_a?(Hash)
+                @assign_list.merge! list_cnv
             else
-                @mapping = list_cnv
+                @assign_list = list_cnv
             end
         end
 
@@ -354,47 +363,41 @@ module Nekonote
         # @return string
         private
         def get_parsed
-            data = ''
-            liq_tpl_template = nil
-            liq_tpl_layout   = nil
             begin
-                if @template_path.is_a? String
-                    liq_tpl_template = Liquid::Template.parse IO.read(@template_path)
+                # parse data in template file
+                template_data = render_data_with_liquid(@template_path, @assign_list)
+
+                # assign it into variable [content] if template was avalable
+                if template_data != nil
+                    @assign_list['content'] = template_data 
                 end
 
-                if @layout_path.is_a? String
-                    liq_tpl_layout = Liquid::Template.parse IO.read(@layout_path)
+                # parse data in layout file with template data
+                layout_data = render_data_with_liquid(@layout_path, @assign_list)
+
+                response_body = ''
+                if layout_data != nil
+                    # just layout or with template
+                    response_body = layout_data
+                elsif template_data != nil
+                    # just template
+                    response_body = template_data
                 end
-
-                # parse and render template
-                if liq_tpl_template.is_a? Liquid::Template
-                    content = liq_tpl_template.render @mapping
-                else
-                    content = nil
-                end
-
-                # parse and render layout
-                if liq_tpl_layout.is_a? Liquid::Template
-                    if content != nil
-                        # assgin tempalte for layout
-                        mapping = {
-                            'content' => content
-                        }
-                        # and put it to @mapping
-                        @mapping.merge! mapping
-                    end
-                    data = liq_tpl_layout.render @mapping
-
-                else
-                    # if template data is available set it to data
-                    data = content if content != nil
-                end
-
             rescue => e
                 raise ViewError, e.message
             end
 
-            return data
+            return response_body
+        end
+
+        # @param string filepath path to file
+        # @param hash assigns variables to assign
+        # @return Liquid::Template|nil
+        # @throw Exception
+        def render_data_with_liquid(filepath, assigns)
+            return nil if !filepath.is_a? String
+            liquid = Liquid::Template.parse IO.read(filepath)
+            return liquid.render assigns
         end
     end
 end

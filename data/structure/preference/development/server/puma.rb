@@ -28,6 +28,7 @@ bind "tcp://#{_host}:#{_port}"
 # }
 
 # Minimum to maximum number of threads to answer.
+# @comment well actually, seems this number plus 6 threads exist ...
 threads 0, 16
 
 # The environment in which the rack's app will run.

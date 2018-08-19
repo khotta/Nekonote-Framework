@@ -67,6 +67,7 @@ module Nekonote
         {:class => :View,            :file => 'view'},
         {:class => :TagEnvGet,       :file => 'liquid/tag_env_get'},
         {:class => :TagSettingGet,   :file => 'liquid/tag_setting_get'},
+        {:class => :TagPartial,      :file => 'liquid/tag_partial'},
         {:class => :Request,         :file => 'request'},
         {:class => :Handler,         :file => 'handler.rb'},
         {:class => :Rackup,          :file => 'rackup'},

@@ -65,7 +65,6 @@ module Nekonote
         {:class => :Setting,         :file => 'setting'},
         {:class => :PageCache,       :file => 'page_cache'},
         {:class => :View,            :file => 'view'},
-        {:class => :TagEnvGet,       :file => 'liquid/tag_env_get'},
         {:class => :TagSettingGet,   :file => 'liquid/tag_setting_get'},
         {:class => :TagPartial,      :file => 'liquid/tag_partial'},
         {:class => :Request,         :file => 'request'},

@@ -1,6 +1,5 @@
 module Nekonote
     # define original liquid tag
-    ::Liquid::Template.register_tag 'env_get', TagEnvGet
     ::Liquid::Template.register_tag 'setting_get', TagSettingGet
     ::Liquid::Template.register_tag 'partial', TagPartial
 

@@ -35,7 +35,7 @@ module Nekonote
                 route_list = []
                 ast.root.children.each_with_index do |node, index|
                     cnt = index / 2
-                    if node.is_a?(Psych::Nodes::Scalar) && node.value != Preference::FIELD_ROUTING_OPTIONS
+                    if node.is_a?(Psych::Nodes::Scalar)
                         route_list[cnt] = {Preference::FIELD_ROUTE_HANDLER => node.value}
                     elsif node.is_a? Psych::Nodes::Mapping
                         if route_list[cnt].is_a? Hash

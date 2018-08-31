@@ -22,77 +22,27 @@ module Nekonote
         url_path_params_mapper.each_key do |name|
           pattern.sub! (':' + name), '.+'
         end
+
+        # todo think in case of "path: /path/to/:something" -> It can match /path/to/foo/bar with {"something"=>"foo"}
       end
 
       return url_path_params_mapper, pattern
     end
 
-    # @param string pattern
+    # @param string path
     # @returns regexp, hash, string
-    def get_route_regexp(pattern)
-      # if home page
-      pattern = '/' if pattern == ''
-
-      # escape special meaning characters in regexp
-      pattern = Regexp.quote pattern
-
+    def get_route_regexp_custom(path)
       # parse path for url path parameters
-      url_path_params_mapper, pattern = parse_url_path_params pattern
+      url_path_params_mapper, path = parse_url_path_params path
 
-      pattern = %(^#{pattern}$)
-
-      # If duplocate slashes are allowed change regexp a little bit for it
-      if Preference.instance.is_allow_dup_slash?
-          pattern.gsub! '/', '/+'
+      if path == ''
+        # home page, it doesn't matter '' or '/'
+        pattern = /^\/?$/
+      else
+        pattern = /^#{path}$/
       end
 
-      match = Regexp.new pattern, nil, 'n'
-
-      return match, url_path_params_mapper, pattern
-    end
-
-    # @param string pattern
-    # @returns regexp, hash, string
-    def get_route_regexp_custom(pattern)
-      option = nil
-      code   = nil
-
-      # parse path for url path parameters
-      url_path_params_mapper, pattern = parse_url_path_params pattern
-
-      if pattern == ''
-        # home page
-        pattern = '/$'
-
-      elsif /\/[ixmn]+$/ =~ pattern
-        # there is regexp option
-        matched_str = $&.delete '/'
-        pattern     = pattern.sub /\/[ixmn]+$/, ''
-        option = 0
-        matched_str.each_char do |char|
-          case char
-          when 'i'
-            option = option | Regexp::IGNORECASE
-          when 'm'
-            option = option | Regexp::MULTILINE
-          when 'x'
-            option = option | Regexp::EXTENDED
-          when 'n'
-            code = 'n'
-          end
-        end
-      end
-
-      pattern = '^' + pattern
-
-      # If duplocate slashes are allowed change regexp a little bit for it
-      if Preference.instance.is_allow_dup_slash?
-          pattern.gsub! '/', '/+'
-      end
-
-      match = Regexp.new pattern, option, code
-
-      return match, url_path_params_mapper, pattern
+      return pattern, url_path_params_mapper
     end
     # =========================================================================
     # End adding source code
@@ -116,11 +66,8 @@ module Nekonote
         # Start adding source code for Nekonote Framework
         # =========================================================================
         # get regexp for matching URL
-        if Preference.instance.is_path_regexp?
-          match, url_path_params_mapper, location = get_route_regexp_custom location # path will be evaluated as regexp
-        else
-          match, url_path_params_mapper, location = get_route_regexp location
-        end
+        # path will be evaluated as regexp
+        match, url_path_params_mapper = get_route_regexp_custom location
 
         # set the values to Nekonote::Handler class
         app.route_regexp = match

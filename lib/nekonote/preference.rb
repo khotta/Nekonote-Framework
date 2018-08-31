@@ -8,14 +8,7 @@ module Nekonote
         # for route.yml
         FIELD_ROUTE_INCLUDE = 'include'
 
-        # routing options
-        FIELD_ROUTING_OPTIONS = 'preference'
-        FIELD_OPTION_ROUTE_REGEXP    = 'path_as_regexp'
-        FIELD_OPTION_ALLOW_DUP_SLASH = 'allow_dup_slash'
-
         # default values for routing options
-        DEFAULT_OPTION_ROUTE_REGEXP      = false
-        DEFAULT_OPTION_ALLOW_DUP_SLASH   = false
         DEFAULT_OPTION_TEMPLATE_FILE_EXT = 'tpl'
         DEFAULT_OPTION_LAYOUT_FILE_EXT   = 'tpl'
 
@@ -138,18 +131,6 @@ module Nekonote
             return @parsed_route_error_yml[field][FIELD_ROUTE_HANDLER].is_a?(String)
         end
 
-        # @return bool
-        public
-        def is_path_regexp?
-            return @is_path_regexp
-        end
-
-        # @return bool
-        public
-        def is_allow_dup_slash?
-            return @is_allow_dup_slash
-        end
-
         # @return string
         public
         def get_template_file_extension
@@ -176,42 +157,8 @@ module Nekonote
                 raise PreferenceError, PreferenceError::MSG_EMPTY_YAML% @path_route_yml
             end
 
-            # set route options
-            init_routing_options
-        end
-
-        # initialize routing options
-        public
-        def init_routing_options
-            @is_path_regexp          = nil
-            @is_allow_dup_slash      = nil
-            @template_file_extension = nil
-            @layout_file_extension   = nil
-
-            # read route.yml
-            pref = YamlAccess::get_parsed @path_route_yml
-
-            # not found but already it's checked though
-            return if !pref.is_a?(Hash)
-
-            routing_options = pref['preference']
-
-            # not found routing options to default
-            return if !routing_options.is_a?(Hash)
-
-            # set value to property
-            # true -> Nekonote::URLMapper, false -> :Rack::URLMap            
-            @is_path_regexp          = routing_options[FIELD_OPTION_ROUTE_REGEXP]    || DEFAULT_OPTION_ROUTE_REGEXP
-            @is_allow_dup_slash      = routing_options[FIELD_OPTION_ALLOW_DUP_SLASH] || DEFAULT_OPTION_ALLOW_DUP_SLASH
             @template_file_extension = DEFAULT_OPTION_TEMPLATE_FILE_EXT
             @layout_file_extension   = DEFAULT_OPTION_LAYOUT_FILE_EXT
-
-            # validation for file extension
-            if !@template_file_extension.is_a?(String) || @template_file_extension == ''
-                raise PreferenceError, Error::MSG_WRONG_TYPE% [FIELD_OPTION_TEMPLATE_EXT, 'String']
-            elsif !@layout_file_extension.is_a?(String) || @layout_file_extension == ''
-                raise PreferenceError, Error::MSG_WRONG_TYPE% [FIELD_OPTION_LAYOUT_EXT, 'String']
-            end
         end
 
         # @param array info information about route

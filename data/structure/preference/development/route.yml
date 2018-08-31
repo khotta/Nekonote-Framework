@@ -13,13 +13,6 @@
 #    custom: some value                                            # Unknown directives are custom fields and are assigned into your templates.
 
 # ----------------------
-# Routing Options
-# ----------------------
-preference:
-    path_as_regexp: true
-    allow_dup_slash: false
-
-# ----------------------
 # Routes
 # ----------------------
 WelcomeHandler:

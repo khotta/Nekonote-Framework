@@ -4,44 +4,9 @@ module Nekonote
         require Nekonote.get_lib_root_path + 'handler/protected_methods'
         include ProtectedMethods
 
-        # =============================================
         # Accessors
-        # =============================================
         attr_accessor :route_regexp,
                       :url_path_params_mapper
-
-        # =============================================
-        # Static method
-        # =============================================
-        # make error handler and execute it
-        # @param string field
-        # @param hash env
-        # @param nil e
-        # @return array
-        def self.call_error_handler(field, env = {}, e = nil)
-            pref = Preference.instance.get_route_error
-
-            # field is expected String and pref[field] is expected Hash
-            if !field.is_a?(String) || !pref[field].is_a?(Hash)
-                raise HandlerError, HandlerError::MSG_MISSING_FIELD%[field, Preference.instance.path_route_error_yml]
-            end
-
-            # make handler newly
-            handler_name = pref[field][Preference::FIELD_ROUTE_HANDLER]
-            if handler_name.is_a? String
-                begin
-                    handler_class = Object.const_get handler_name
-                    error_handler = handler_class.new pref[field].clone, field, e
-                rescue
-                    raise HandlerError, HandlerError::MSG_MISSING_CONST% handler_name
-                end
-            else
-                raise HandlerError, HandlerError::MSG_MISSING_ERR_HANDLER
-            end
-
-            return error_handler.call env
-        end
-
 
         # It would be called only one time
         # @param hash info route information
@@ -63,32 +28,17 @@ module Nekonote
             @custom_fields = Preference.get_custom_fields info, error_field_name.is_a?(String)
         end
 
-        # reload preferences
-        private
-        def pref_reloader
-            path = Nekonote.get_root_path + Preference::FILE_NAME_FOR_RELOAD
-            if File.exist? path
-                # reload logger
-                Nekonote.init_logger
-
-                # reload setting
-                Setting.init
-
-                Util::Filer::safe_delete_empty_file path
-            end
-        end
-
         # This method would be called from rack and called in every request
         # @param hash env rack environment
         public
         def call(env)
             # reload preferences if needed
-            pref_reloader
+            reload_pref
 
             # get reponse data from page cache if it's available
             if @view.can_get_from_page_cache?(env['REQUEST_URI'])
                 response_data = @view.get_response_data_from_page_cache env['REQUEST_URI']
-                if response_data.size == 3
+                if response_data.size == 3 # response code, headers, body
                     # return the cache
                     return response_data
                 else
@@ -109,7 +59,7 @@ module Nekonote
             # set request
             @request = Request.new env, @view.info_params
 
-            # set request body to request object if it exists
+            # set request body from payload if it exists
             if env['rack.input'].is_a? StringIO
                 # reverting file pointer I don't know why the pointer moved just one...?
                 env['rack.input'].rewind
@@ -150,17 +100,6 @@ module Nekonote
             return View.get_default_error_response
         end
 
-        # @param StandardError|ScriptError e
-        # @throws StandardError|ScriptError
-        private
-        def process_exception_raised(e)
-            # logging if logger is enabled
-            Error.logging_error e
-
-            # raise the exception for ShowExceptions if it's enabled
-            raise e if Preference.instance.is_enabled_show_exceptions
-        end
-
         # It would be called by every request
         # @param hash env
         # @return array
@@ -188,6 +127,84 @@ module Nekonote
             return get_response_data
         end
 
+        # make error handler and execute it
+        # @param string field
+        # @param hash env
+        # @param nil e
+        # @return array
+        def self.call_error_handler(field, env = {}, e = nil)
+            pref = Preference.instance.get_route_error
+
+            # check if there is a route for it?
+            if !pref.is_a?(Hash) || !pref[field].is_a?(Hash)
+                # no route for it
+                raise HandlerError, HandlerError::MSG_NO_ERROR_ROUTE% field
+            end
+
+            # make error handler
+            handler_name = pref[field][Preference::FIELD_ROUTE_HANDLER]
+            if handler_name.is_a? String
+                begin
+                    handler_class = Object.const_get handler_name
+                    error_handler = handler_class.new pref[field].clone, field, e
+                rescue
+                    raise HandlerError, HandlerError::MSG_MISSING_CONST% handler_name
+                end
+            else
+                raise HandlerError, HandlerError::MSG_MISSING_ERR_HANDLER
+            end
+
+            return error_handler.call env
+        end
+
+        # Get response data and return values as rack needed
+        # @return array
+        private
+        def get_response_data
+            # return response if redirection
+            if @view.is_redirect
+                return @view.get_response_data
+            end
+
+            # set response body with template and/or layout when response body hasn't been set by __set_body
+            @view.set_body_with_tpl if !@view.is_body_set?
+
+            # make page cache file if need it
+            if @view.need_create_page_cache? @request.uri
+                @view.create_page_cache @request.uri
+            end
+
+            return @view.get_response_data
+        end
+
+        # reload preferences
+        # only for logger.yml setting/**/*.yml
+        private
+        def reload_pref
+            path = Nekonote.get_root_path + Preference::FILE_NAME_FOR_RELOAD
+
+            if File.exist? path
+                # reload logger
+                Nekonote.init_logger
+
+                # reload setting
+                Setting.init
+
+                Util::Filer::safe_delete_empty_file path
+            end
+        end
+
+        # @param StandardError|ScriptError e
+        # @throws StandardError|ScriptError
+        private
+        def process_exception_raised(e)
+            # logging if logger is enabled
+            Error.logging_error e
+
+            # raise the exception for ShowExceptions if it's enabled
+            raise e if Preference.instance.is_enabled_show_exceptions
+        end
+
         # Check does requested path correspond with the given value to #map
         # @return bool
         private
@@ -210,26 +227,6 @@ module Nekonote
                 # doesn't match, the requested path is wrong
                 return false
             end
-        end
-
-        # Get response data and return values as rack needed
-        # @return array
-        private
-        def get_response_data
-            # return response if redirection
-            if @view.is_redirect
-                return @view.get_response_data
-            end
-
-            # set response body with template and/or layout when response body hasn't been set by __set_body
-            @view.set_body_with_tpl if !@view.is_body_set?
-
-            # make page cache file if need it
-            if @view.need_create_page_cache? @request.uri
-                @view.create_page_cache @request.uri
-            end
-
-            return @view.get_response_data
         end
 
         # @param string|symbol|nil task method name defined in 'klass'
@@ -261,14 +258,19 @@ module Nekonote
         # @return false|nil|int
         private
         def is_allowed_http_method(method)
+            # invalid input to NG
             return false if !method.is_a? String
-            http_methods = @view.info_allow_methods
-            return true if http_methods == nil
-            http_methods = http_methods.split(',')
-            http_methods.map! do |val|
-                val.strip
-            end
-            return http_methods.index method
+
+            # expecting http method
+            allow_method = @view.info_allow_method
+
+            # no configuration to OK
+            return true if !allow_method.is_a? String
+
+            allow_method.strip!
+
+            # case-insensitive judge
+            return allow_method.casecmp(method) == 0
         end
     end
 end

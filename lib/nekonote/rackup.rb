@@ -267,7 +267,7 @@ EOS
                                 else
                                     # directive name is duplicate between route.yml and route_include.yml
                                     # values in route.yml takes precedence over values in route_include.yml that without method or params
-                                    info[k] += ',' + v if k == Preference::FIELD_ROUTE_PARAMS || k == Preference::FIELD_ROUTE_ALLOW_METHODS
+                                    info[k] += ',' + v if k == Preference::FIELD_ROUTE_PARAMS || k == Preference::FIELD_ROUTE_ALLOW_METHOD
                                 end
                             end
                             info.delete Preference::FIELD_ROUTE_INCLUDE

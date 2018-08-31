@@ -13,7 +13,7 @@ module Nekonote
         attr_reader   :is_error_route,
                       :info_path,
                       :info_exec_method,
-                      :info_allow_methods,
+                      :info_allow_method,
                       :info_params,
                       :info_content_type,
                       :info_template,
@@ -259,7 +259,7 @@ module Nekonote
         def register_info_properies(info)
             @info_path            = info[Preference::FIELD_ROUTE_PATH]
             @info_exec_method     = info[Preference::FIELD_ROUTE_EXEC_METHOD]
-            @info_allow_methods   = info[Preference::FIELD_ROUTE_ALLOW_METHODS]
+            @info_allow_method    = info[Preference::FIELD_ROUTE_ALLOW_METHOD]
             @info_params          = info[Preference::FIELD_ROUTE_PARAMS]
             @info_content_type    = info[Preference::FIELD_ROUTE_CONTENT_TYPE]
             @info_template        = info[Preference::FIELD_ROUTE_TEMPLATE]

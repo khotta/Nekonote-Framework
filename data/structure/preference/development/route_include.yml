@@ -9,14 +9,14 @@
 #     template: false
 #     layoute: false
 #
-# In order to set the above preferences you must write 'include' directive like:
+# In order to set the above preferences you must write 'include' directive
 #
 # FooHandler:
 #     path: /foo
-#     method: foo
+#     execute: foo
 #     include: common 
 #
 # BarHandler:
 #     path: /bar
-#     method: bar
+#     execute: bar
 #     include: common

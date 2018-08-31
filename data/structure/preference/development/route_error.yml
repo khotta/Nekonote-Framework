@@ -1,4 +1,6 @@
-# Routing for Error Pages
+# Error Routes
+#
+# It's possible to comment out the directives below then error routes does not be used.
 
 # This route is used when any route does not match a URL.
 # You must set “path_as_regexp” directive to “true” which in route.yml to use this route.
@@ -7,21 +9,20 @@ missing_route:
     execute: missing_route
     layout: error
 
-# This route is used when some value is set to “method” directive in route.y
-#   and a request HTTP method is not declared in that value.
+# This route is used when a HTTP method in request does not much the value set in “method” directive in route.yml
 wrong_http_method:
     handler: ErrorHandler
     execute: wrong_http_method
     layout: error
 
-# This route is used when a fatal error raised in program.
-# The exception object is set to a property called @error in a Handler you specified.
+# This route is used when a fatal error raised in your program.
+# The exception object will be set to the property named @error.
 fatal:
     handler: ErrorHandler
     execute: fatal
     layout: error
 
-# This route is used when a requested file dosen’t exist under the “public” directo
+# This route is used when a request file does not exist under the “public” directory.
 not_found:
     handler: ErrorHandler
     execute: not_found

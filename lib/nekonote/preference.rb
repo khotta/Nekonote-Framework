@@ -28,7 +28,7 @@ module Nekonote
         # for route.yml and route_error.yml
         FIELD_ROUTE_PATH            = 'path'
         FIELD_ROUTE_EXEC_METHOD     = 'execute'
-        FIELD_ROUTE_ALLOW_METHODS   = 'method'
+        FIELD_ROUTE_ALLOW_METHOD    = 'method'
         FIELD_ROUTE_PARAMS          = 'params'
         FIELD_ROUTE_CONTENT_TYPE    = 'content'
         FIELD_ROUTE_TEMPLATE        = 'template'
@@ -40,7 +40,7 @@ module Nekonote
         FIELDS_IN_ROUTE = [
             FIELD_ROUTE_PATH,
             FIELD_ROUTE_EXEC_METHOD,
-            FIELD_ROUTE_ALLOW_METHODS,
+            FIELD_ROUTE_ALLOW_METHOD,
             FIELD_ROUTE_PARAMS,
             FIELD_ROUTE_CONTENT_TYPE,
             FIELD_ROUTE_TEMPLATE,
@@ -129,11 +129,7 @@ module Nekonote
         # @return bool
         public
         def has_error_route?(field)
-            # not found route_error.yml just return false, error pages is not required
-            if @parsed_route_error_yml == nil
-                return false
-            end
-
+            # not found route_error.yml just return false
             # check if the field exists
             if !@parsed_route_error_yml.is_a?(Hash) || !@parsed_route_error_yml[field].is_a?(Hash)
                 return false

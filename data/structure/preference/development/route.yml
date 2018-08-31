@@ -2,21 +2,21 @@
 #
 # e.g.
 # FooHandler:
-#    path: /foo                                                    # This is required. The following directives are optional.
-#    execute: foo                                                  # It says FooHandler#foo method is called when route matches.
-#    method: GET, POST                                             # It says GET or POST requests are accepted.
-#    params: foo=int, bar=string, baz=array, qux=float, quux=bool  # The listed parameters are accepted and are coverted to its expected types.
-#    content: json                                                 # It says Content-Type: application/json is set to response.
-#    template: foo                                                 # static/template/foo.tpl is rendered.
-#    layout: common                                                # static/layout/common.tpl is rendered
-#    # page_cache_time: 3600                                       # if you need page caching this route, need to comment out it.
-#    custom: some value                                            # unknown fields are not directive. It will be assigned into your templates.
+#    path: /foo                                                    # This directive is required. The following directives are optional.
+#    execute: foo                                                  # It says FooHandler#foo will be called.
+#    method: POST                                                  # It says requests only with POST method are accepted.
+#    params: foo=int, bar=string, baz=array, qux=float, quux=bool  # The listed parameters are accepted and are coverted to its expected type.
+#    content: json                                                 # It says Content-Type: application/json will be set to response.
+#    template: foo                                                 # template/foo.tpl will be used.
+#    layout: common                                                # template/layout/common.tpl will be used
+#    page_cache_time: 3600                                         # set int in seconds if the route needs page caching.
+#    custom: some value                                            # Unknown directives are custom fields and are assigned into your templates.
 
 # ----------------------
-# routing options
+# Routing Options
 # ----------------------
 preference:
-    path_as_regexp: false
+    path_as_regexp: true
     allow_dup_slash: false
 
 # ----------------------

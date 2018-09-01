@@ -20,7 +20,7 @@ module Nekonote
 
         # replace variable with wildcard
         url_path_params_mapper.each_key do |name|
-          pattern.sub! (':' + name), '.+'
+          pattern.sub! (':' + name), '\w+'
         end
 
         # todo think in case of "path: /path/to/:something" -> It can match /path/to/foo/bar with {"something"=>"foo"}

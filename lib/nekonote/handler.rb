@@ -212,20 +212,28 @@ module Nekonote
             match_data = @route_regexp.match requested_path
             if match_data.is_a? MatchData
                 # set URL path parameters to Request object
-                if @url_path_params_mapper.is_a? Hash
-                    stack = requested_path.split('/')
-                    map   = {}
-                    @url_path_params_mapper.each_pair do |name, index|
-                        map[name] = stack[index] 
-                    end
-                    @request.assign_from_url map
-                end
-
+                set_url_path_params requested_path
                 return true
 
             else
                 # doesn't match, the requested path is wrong
                 return false
+            end
+        end
+
+        # set url path params to@request object
+        # @param string requested_path
+        private
+        def set_url_path_params(requested_path)
+            # if there is URL path parameters
+            if @url_path_params_mapper.is_a?(Hash) && @url_path_params_mapper.size > 0
+                stack = requested_path.split('/')
+                map   = {}
+                @url_path_params_mapper.each_pair do |name, index|
+                    map[name] = stack[index]
+                end
+
+                @request.assign_from_url map
             end
         end
 

@@ -43,7 +43,7 @@ The templating engine on Nekonote Framework is Liquid.
 
 Please see [Getting Started](https://nekonote-framework.github.io/document/1.0.0-beta/getting-started.html) on the reference manual.
 
-You need to use `--pre` option when install pre-beta version like:
+You need to use `--pre` option when installing pre-beta version.
 
         $ gem install nekonote-framework --pre
 

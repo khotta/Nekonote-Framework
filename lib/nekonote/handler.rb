@@ -57,7 +57,7 @@ module Nekonote
             @session = Env.get 'rack.session'
 
             # set request
-            @request = Request.new env, @view.info_params
+            @request = Request.new env
 
             # set request body from payload if it exists
             if env['rack.input'].is_a? StringIO

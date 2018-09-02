@@ -262,13 +262,8 @@ EOS
                         # include directive has been set in the route
                         if pref_common[info[Preference::FIELD_ROUTE_INCLUDE]].is_a? Hash
                             pref_common[info[Preference::FIELD_ROUTE_INCLUDE]].each_pair do |k, v|
-                                if info[k] == nil
-                                    info[k] = v
-                                else
-                                    # directive name is duplicate between route.yml and route_include.yml
-                                    # values in route.yml takes precedence over values in route_include.yml that without method or params
-                                    info[k] += ',' + v if k == Preference::FIELD_ROUTE_PARAMS || k == Preference::FIELD_ROUTE_ALLOW_METHOD
-                                end
+                                # duplicated then values in route.yml should take precedence
+                                info[k] = v
                             end
                             info.delete Preference::FIELD_ROUTE_INCLUDE
                         else

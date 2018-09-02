@@ -4,7 +4,6 @@
 # e.g.
 # common:
 #     method: GET
-#     params: id=int
 #     content: json
 #     template: false
 #     layoute: false

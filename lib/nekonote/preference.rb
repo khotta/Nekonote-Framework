@@ -22,7 +22,6 @@ module Nekonote
         FIELD_ROUTE_PATH            = 'path'
         FIELD_ROUTE_EXEC_METHOD     = 'execute'
         FIELD_ROUTE_ALLOW_METHOD    = 'method'
-        FIELD_ROUTE_PARAMS          = 'params'
         FIELD_ROUTE_CONTENT_TYPE    = 'content'
         FIELD_ROUTE_TEMPLATE        = 'template'
         FIELD_ROUTE_LAYOUT          = 'layout'
@@ -34,7 +33,6 @@ module Nekonote
             FIELD_ROUTE_PATH,
             FIELD_ROUTE_EXEC_METHOD,
             FIELD_ROUTE_ALLOW_METHOD,
-            FIELD_ROUTE_PARAMS,
             FIELD_ROUTE_CONTENT_TYPE,
             FIELD_ROUTE_TEMPLATE,
             FIELD_ROUTE_LAYOUT,

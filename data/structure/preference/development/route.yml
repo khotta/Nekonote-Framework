@@ -15,5 +15,6 @@ WelcomeHandler:
     path: /
     execute: index
     template: welcome/index
+    layout: default
     css: /css/welcome.css
     page-title: Welcome

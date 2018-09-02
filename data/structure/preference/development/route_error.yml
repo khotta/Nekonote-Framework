@@ -3,16 +3,17 @@
 # It's possible to comment out the directives below then error routes does not be used.
 
 # This route is used when any route does not match a URL.
-# You must set “path_as_regexp” directive to “true” which in route.yml to use this route.
 missing_route:
     handler: ErrorHandler
     execute: missing_route
+    template: error
     layout: error
 
-# This route is used when a HTTP method in request does not much the value set in “method” directive in route.yml
+# This route is used when a HTTP method in request does not much the value set in "method" directive in route.yml.
 wrong_http_method:
     handler: ErrorHandler
     execute: wrong_http_method
+    template: error
     layout: error
 
 # This route is used when a fatal error raised in your program.
@@ -20,10 +21,12 @@ wrong_http_method:
 fatal:
     handler: ErrorHandler
     execute: fatal
+    template: error
     layout: error
 
-# This route is used when a request file does not exist under the “public” directory.
+# This route is used when a request file does not exist under the "public" directory.
 not_found:
     handler: ErrorHandler
     execute: not_found
+    template: error
     layout: error

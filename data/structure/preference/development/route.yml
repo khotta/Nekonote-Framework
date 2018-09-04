@@ -8,7 +8,8 @@
 #    content: json            # It says Content-Type: application/json will be set to response.
 #    template: foo            # template/foo.tpl will be used.
 #    layout: common           # template/layout/common.tpl will be used
-#    page_cache_time: 3600    # set int in seconds if the route needs page caching.
+#    page_cache_time: 3600    # Setting an integer in seconds to turning on page caching.
+#    include: common          # Includes a group of the directives from route_include.yml.
 #    custom: some value       # Unknown directives are custom fields and are assigned into your templates.
 
 WelcomeHandler:
